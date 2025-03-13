@@ -21,13 +21,25 @@ public class conectaDAO {
         Connection conn = null;
         
         try {
-        
-            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11?user=root&password=");
-            
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost/uc11","root","W<Uxg8fx5Y~)ce1$"); // insira o tipo de usuario e a senha no segundo e na terceira casa.
         } catch (SQLException erro){
             JOptionPane.showMessageDialog(null, "Erro ConectaDAO" + erro.getMessage());
+        }catch(ClassNotFoundException ex){
+            System.out.println("Erro: Driver JDBC nao encontrado!.");
         }
         return conn;
+    }
+    
+    public void desconectarDB(Connection conn){
+        try{
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Banco de dados desconectado.");
+            }
+        }catch(SQLException ex){
+            System.out.println("Nao foi possivel desconectar do banco dados.");
+        }
     }
     
 }
