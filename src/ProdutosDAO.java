@@ -29,10 +29,11 @@ public class ProdutosDAO {
         
         try{
             conn = dao.connectDB();
-            String sql = "INSERT INTO produtos VALUES (?,?)";
+            String sql = "INSERT INTO produtos (nome, valor, status) VALUES(?,?,?)";
             prep = conn.prepareStatement(sql);
             prep.setString(1, produto.getNome());
             prep.setInt(2, produto.getValor());
+            prep.setString(3, produto.getStatus());
             
             prep.executeUpdate();
         }catch(SQLException ex){

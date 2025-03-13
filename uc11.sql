@@ -32,7 +32,7 @@ USE uc11;
 --
 
 CREATE TABLE `produtos` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+  `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `nome` text DEFAULT NULL,
   `valor` int(11) DEFAULT NULL,
   `status` text DEFAULT NULL
