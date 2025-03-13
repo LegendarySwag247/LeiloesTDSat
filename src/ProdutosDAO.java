@@ -36,6 +36,7 @@ public class ProdutosDAO {
             prep.setString(3, produto.getStatus());
             
             prep.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Cadastro foi realizado com sucesso!!");
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro ao connectar! " + ex.getMessage());
         }finally{
@@ -64,7 +65,6 @@ public class ProdutosDAO {
 
                 listagem.add(produto);
             }
-            
             
         }catch(SQLException ex){
             JOptionPane.showMessageDialog(null, "Erro ao connectar! " + ex.getMessage());
