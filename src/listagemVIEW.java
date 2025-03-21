@@ -137,26 +137,7 @@ public class listagemVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        String id = id_produto_venda.getText();
-        try{
-            int identidade = Integer.parseInt(id);
-            ProdutosDAO produtosdao = new ProdutosDAO();
-            
-            ProdutosDTO produto = produtosdao.pegarProduto(identidade);
-            
-            if(produto.getId() == identidade){
-                produtosdao.venderProduto(identidade);
-                JOptionPane.showMessageDialog(null, "Seu produto foi vendido com sucesso!!");
-            }
-            
-        }catch(NullPointerException e){
-            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
-        }catch(NumberFormatException e){
-            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
-        }catch(Exception e){
-            JOptionPane.showMessageDialog(null, "Erro:" + e.getMessage());
-        }
-        listarProdutos();
+        venderProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
     private void btnVendasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVendasActionPerformed
@@ -216,6 +197,29 @@ public class listagemVIEW extends javax.swing.JFrame {
     private javax.swing.JTable listaProdutos;
     // End of variables declaration//GEN-END:variables
 
+    public void venderProdutos(){
+        String id = id_produto_venda.getText();
+        try{
+            int identidade = Integer.parseInt(id);
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            ProdutosDTO produto = produtosdao.pegarProduto(identidade);
+            
+            if(produto.getId() == identidade){
+                produtosdao.venderProduto(identidade);
+                JOptionPane.showMessageDialog(null, "Seu produto foi vendido com sucesso!!");
+            }
+            
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro:" + e.getMessage());
+        }
+        listarProdutos();
+    }
+    
     private void listarProdutos(){
         try {
             ProdutosDAO produtosdao = new ProdutosDAO();
