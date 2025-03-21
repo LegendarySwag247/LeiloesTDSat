@@ -75,7 +75,56 @@ public class ProdutosDAO {
     }
     
     
+    public ProdutosDTO pegarProduto(int id){
+        ProdutosDTO produto = new ProdutosDTO();
+        conectaDAO dao = new conectaDAO();
+        try{
+            conn = dao.connectDB();
+            String sql = "SELECT * FROM produtos WHERE id = ?";
+            prep = conn.prepareStatement(sql);
+            prep.setInt(1, id);
+            resultset = prep.executeQuery();
+            
+            if (resultset.next()) {
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+            }
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao connectar! " + ex.getMessage());
+        }finally{
+            dao.desconectarDB(conn);
+        }
+        return produto;
+    }
     
+    
+    public void venderProduto(int produto_id){
+        String res = "Vendido";
         
+        conectaDAO dao = new conectaDAO();
+        
+        try{
+            conn = dao.connectDB();
+            String sql = "UPDATE produtos SET status = ? WHERE id = ? AND status LIKE ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, res);
+            prep.setInt(2, produto_id);
+            prep.setString(3, "A Venda");
+            
+            prep.executeUpdate();
+            
+        }catch(SQLException ex){
+            
+            JOptionPane.showMessageDialog(null, "Erro ao connectar! " + ex.getMessage());
+            
+        }finally{
+            dao.desconectarDB(conn);
+        }
+    }
+    
+    
 }
 
