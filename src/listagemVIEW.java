@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /*
@@ -137,10 +138,24 @@ public class listagemVIEW extends javax.swing.JFrame {
 
     private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
         String id = id_produto_venda.getText();
-        
-        ProdutosDAO produtosdao = new ProdutosDAO();
-        
-        //produtosdao.venderProduto(Integer.parseInt(id));
+        try{
+            int identidade = Integer.parseInt(id);
+            ProdutosDAO produtosdao = new ProdutosDAO();
+            
+            ProdutosDTO produto = produtosdao.pegarProduto(identidade);
+            
+            if(produto.getId() == identidade){
+                produtosdao.venderProduto(identidade);
+                JOptionPane.showMessageDialog(null, "Seu produto foi vendido com sucesso!!");
+            }
+            
+        }catch(NullPointerException e){
+            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Id não encontrado, tente novamente!");
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro:" + e.getMessage());
+        }
         listarProdutos();
     }//GEN-LAST:event_btnVenderActionPerformed
 
@@ -219,6 +234,7 @@ public class listagemVIEW extends javax.swing.JFrame {
                 });
             }
         } catch (Exception e) {
+            System.out.print("Erro: "+ e.getMessage());
         }
     
     }
