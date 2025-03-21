@@ -46,6 +46,7 @@ public class ProdutosDAO {
         
     }
     
+    
     public ArrayList<ProdutosDTO> listarProdutos(){
         
         conectaDAO dao = new conectaDAO();
@@ -54,6 +55,35 @@ public class ProdutosDAO {
             conn = dao.connectDB();
             String sql = "SELECT * FROM produtos";
             prep = conn.prepareStatement(sql);
+            resultset = prep.executeQuery();
+            
+            while (resultset.next()) {
+                ProdutosDTO produto = new ProdutosDTO();
+                produto.setId(resultset.getInt("id"));
+                produto.setNome(resultset.getString("nome"));
+                produto.setValor(resultset.getInt("valor"));
+                produto.setStatus(resultset.getString("status"));
+
+                listagem.add(produto);
+            }
+            
+        }catch(SQLException ex){
+            JOptionPane.showMessageDialog(null, "Erro ao connectar! " + ex.getMessage());
+        }finally{
+            dao.desconectarDB(conn);
+        }
+        return listagem;
+    }
+    
+    public ArrayList<ProdutosDTO> listarProdutosVendidos(){
+        
+        conectaDAO dao = new conectaDAO();
+        
+        try{
+            conn = dao.connectDB();
+            String sql = "SELECT * FROM produtos WHERE status LIKE ?";
+            prep = conn.prepareStatement(sql);
+            prep.setString(1, "Vendido");
             resultset = prep.executeQuery();
             
             while (resultset.next()) {
